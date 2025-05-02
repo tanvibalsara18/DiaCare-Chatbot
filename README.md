@@ -49,8 +49,8 @@ Participants and users often have frequent questions during the Odoo Hackathon. 
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/chatbot-app.git
-   cd chatbot-app
+   git clone https://github.com/tanvibalsara18/DiaCare-Chatbot.git
+   cd DiaCare-Chatbot
    ```
 
 2. **Create & Activate Virtual Environment**
