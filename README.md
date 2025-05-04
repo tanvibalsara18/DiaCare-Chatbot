@@ -1,4 +1,3 @@
-
 # 🤖 AI-Powered Chatbot for Odoo Hackathon 2025
 
 A FastAPI-based intelligent chatbot designed to provide instant answers from a curated FAQ database and fallback to Google Gemini AI for dynamic query responses. Built to assist users in real-time during the Odoo Hackathon!
@@ -15,6 +14,7 @@ Participants and users often have frequent questions during the Odoo Hackathon. 
 - 🧠 Instant answers to predefined FAQ questions (diabetes, foot ulcer, and app-related)
 - 🤖 Generative fallback using **Gemini AI** when no match is found
 - 💬 Seamless API-based chatbot integration
+- 🌍 **Multi-language support**: The chatbot detects the user's language and can respond accordingly in different languages.
 
 ---
 
@@ -27,6 +27,7 @@ Participants and users often have frequent questions during the Odoo Hackathon. 
 - **Pandas** for data handling
 - **Uvicorn** as ASGI server
 - **dotenv** for secure key management
+- **googletrans** for multi-language translation
 
 ---
 
@@ -95,14 +96,31 @@ Response:
 }
 ```
 
+**How the "language" field works:**
+
+-The "language" field in the request specifies the language for the response.
+
+-If the user provides a language code (e.g., "gu" for Gujarati), the question will be translated to English first, and the response will be translated back to the specified language.
+
+-If no "language" field is provided, the chatbot will default to English, and the response will be given in English.
+
+--For example, if a user asks the question in Gujarati but specifies "language": "gu", the chatbot will translate the question to English, search for an answer, and then translate the response back to Gujarati.
+
+
 ---
 
 ## 🧠 How It Works
 
-1. User asks a question via POST `/chat/`.
-2. We compare it semantically with existing FAQ questions using `SentenceTransformer`.
-3. If similarity > 0.80 → return the matched FAQ answer.
-4. Else → use **Google Gemini** to generate a fresh answer.
+1. Multi-language Support:
+The chatbot detects the language of the user's question. If the question is not in English, it will automatically translate the question to English before searching for a match in the FAQ. If no match is found, it will generate a response using Google Gemini AI, which is also translated back to the original language. This ensures a seamless experience for users, regardless of the language they use.
+
+2. User asks a question via POST /chat/ in their preferred language (e.g., Gujarati, Spanish, etc.).
+
+3. We compare the question semantically with existing FAQ questions using SentenceTransformer.
+
+4. If similarity > 0.80 → return the matched FAQ answer in the user's language.
+
+5. Else → use Google Gemini to generate a fresh answer and translate it back to the user's language.
 
 ---
 
